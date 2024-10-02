@@ -1,10 +1,12 @@
 package domain
 
 type Customer struct {
+	Id          string
 	Name        string
 	City        string
-	Zipcode     string
 	DateofBirth string
+	Zipcode     string
+	Status      string
 }
 
 type CustomerRepository interface {
