@@ -6,7 +6,7 @@ import (
 )
 
 type CustomerService interface {
-	GetAllCustomers() ([]domain.Customer, error)
+	GetAllCustomers() ([]domain.Customer, *errors.AppError)
 	GetCustomer(string) (*domain.Customer, *errors.AppError)
 }
 
@@ -14,7 +14,7 @@ type CustomerRepoInjector struct {
 	repo domain.CustomerRepository
 }
 
-func (c CustomerRepoInjector) GetAllCustomers() ([]domain.Customer, error) {
+func (c CustomerRepoInjector) GetAllCustomers() ([]domain.Customer, *errors.AppError) {
 	return c.repo.FindAll()
 }
 
