@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+
+	"github.com/abhilash111/bank_app/errors"
 )
 
 type CustomerRepositoryDb struct {
@@ -31,15 +33,21 @@ func (c CustomerRepositoryDb) FindAll() ([]Customer, error) {
 	return customers, nil
 }
 
-func (d CustomerRepositoryDb) ById(id string) (*Customer, error) {
+func (d CustomerRepositoryDb) ById(id string) (*Customer, *errors.AppError) {
 	custmerQuery := "select * from customers where customer_id = $1 "
 	row := d.client.QueryRow(custmerQuery, id)
 	var c Customer
 	err := row.Scan(&c.Id, &c.Name, &c.City, &c.DateofBirth, &c.Zipcode, &c.Status)
 	if err != nil {
-		fmt.Println("Err", err)
-		return nil, fmt.Errorf("Customer with id %s not Found", id)
+		if err == sql.ErrNoRows {
+			fmt.Println("Err", err)
+			return nil, errors.NewNotFoundError(`Customer Not Found`)
+		} else {
+			log.Println("Error While scanning customer" + err.Error())
+			return nil, errors.NewUnExpectedError(`Unexpected Database error`)
+		}
 	}
+
 	return &c, nil
 }
 

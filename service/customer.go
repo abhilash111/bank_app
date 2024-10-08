@@ -1,10 +1,13 @@
 package service
 
-import "github.com/abhilash111/bank_app/domain"
+import (
+	"github.com/abhilash111/bank_app/domain"
+	"github.com/abhilash111/bank_app/errors"
+)
 
 type CustomerService interface {
 	GetAllCustomers() ([]domain.Customer, error)
-	GetCustomer(string) (*domain.Customer, error)
+	GetCustomer(string) (*domain.Customer, *errors.AppError)
 }
 
 type CustomerRepoInjector struct {
@@ -15,7 +18,7 @@ func (c CustomerRepoInjector) GetAllCustomers() ([]domain.Customer, error) {
 	return c.repo.FindAll()
 }
 
-func (c CustomerRepoInjector) GetCustomer(id string) (*domain.Customer, error) {
+func (c CustomerRepoInjector) GetCustomer(id string) (*domain.Customer, *errors.AppError) {
 	return c.repo.ById(id)
 }
 
