@@ -1,17 +1,17 @@
 package app
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 
 	"github.com/abhilash111/bank_app/domain"
+	"github.com/abhilash111/bank_app/logger"
 	"github.com/abhilash111/bank_app/service"
 	"github.com/gorilla/mux"
 )
 
 func Start() {
-	fmt.Printf("Bank App Started Successfully at localhost:8000...")
+	logger.Info("Bank App Started Successfully at localhost:8000...")
 	router := mux.NewRouter()
 	//wiring
 	ch := CustomerHandler{Service: service.NewCustomerService(domain.NewCustomerRepositoryDb())}
