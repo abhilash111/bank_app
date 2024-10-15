@@ -2,7 +2,7 @@ package domain
 
 import (
 	"github.com/abhilash111/bank_app/dto"
-	"github.com/abhilash111/bank_app/errors"
+	"github.com/abhilash111/bank_app/errs"
 )
 
 type Customer struct {
@@ -15,8 +15,8 @@ type Customer struct {
 }
 
 type CustomerRepository interface {
-	FindAll() ([]Customer, *errors.AppError)
-	ById(string) (*Customer, *errors.AppError)
+	FindAll() ([]Customer, *errs.AppError)
+	ById(string) (*Customer, *errs.AppError)
 }
 
 func (c *Customer) ToDto() dto.CustomerResponse {
